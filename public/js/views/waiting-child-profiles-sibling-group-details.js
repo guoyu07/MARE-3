@@ -157,6 +157,9 @@
 		/* Open the modal container */
 		// TODO: This should be moved to a more appropriate location that's accessible to all pages
 		openModal: function openModal() {
+			// TODO: find a better place to put this
+			$( '.modal__container' ).addClass( 'modal__container--large' );
+			
 			$('.modal__background').fadeIn();
 			$('.modal-container__contents').hide();
 			$('.modal-container__loading').show();
@@ -183,6 +186,8 @@
 		// TODO: This should be moved to a more appropriate location that's accessible to all pages
 		clearModalContents: function clearModalContents() {
 			$('.modal-container__contents').html('');
+			// TODO: find a better place to put this
+			$( '.modal__container' ).removeClass( 'modal__container--large' );
 		},
 
 		/* initialize tabbing within the modal window */
