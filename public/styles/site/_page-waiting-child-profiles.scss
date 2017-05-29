@@ -49,10 +49,18 @@
 	vertical-align: middle;
 }
 
+.child-details {
+	align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+	min-height: 100%;
+}
+
 /* TODO: We've BEM'ed below, now BEM above! */
 .profile__profile-navigation {
 	margin-bottom: 1em;
-	color: $modal-color-1;
+	color: $link-color;
 }
 
 .profile-navigation__previous-text,
@@ -96,36 +104,60 @@
 }
 
 .profile-tab__contents--selected {
-	display: block;
+	display: flex;
+	flex-direction: column;
 }
 
 .profile__profile-picture {
-	width: 200px;
-    float: right;
-    margin-left: 1em;
     margin-bottom: 1em;
+	margin-right: 1em;
+	width: 200px;
+
+	@media all and (min-width: 825px) {
+		width: 300px;
+	}
 }
 
 .profile__basic-info {
-	margin-right: 15em;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 2em;
+}
+
+.profile__detailed-info {
+	display: flex;
+}
+
+.profile__bio {
+	flex-grow: 1;
+	line-height: 1.3;
 }
 
 .profile-details__name {
-	font-size: 1.4em;
-	font-style: italic;
+	border-bottom: 3px solid $teal;
+	font-size: 1.875em; /* 30px */	
+	font-weight: 300;
 	margin-bottom: 0.4em;
-	font-weight: 400;
+	padding: 0 1em 0.5em 1em;
 }
 
 .profile-details__age {
-	margin-bottom: .8em;
+
 }
 
 .profile-details__registration-number {
 	margin-bottom: 2em;
+
+	&:before {
+		content: '';
+		// TODO: put the teal mare icon here
+		// background: url('')
+	}
 }
 
 .detailed-child-info__header {
+	font-size: 1.125em; /* 18px */
 	font-weight: 600;
 }
 
@@ -134,11 +166,6 @@
 .detailed-child-info__part-2,
 .detailed-child-info__part-3 {
 	margin-bottom: 1.5em;
-}
-
-.detailed-child-info__introduction,
-.detailed-child-info__part-1 {
-	margin-right: 15em;
 }
 
 .profile-details__video-container,
@@ -157,6 +184,10 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+.profile__footer {
+	margin-bottom: 2em;
 }
 
 /* TODO: possibly put these in the media-boxes trumps file
