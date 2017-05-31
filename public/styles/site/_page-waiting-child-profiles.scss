@@ -81,32 +81,10 @@
 	font-size: 1.2em;
 }
 
-.profile-tabs {
-	border-bottom: 1px solid $modal-color-1;
-	margin-bottom: 1em;
-}
-
-.profile-tabs__tab {
-	padding: 1em;
-	display: inline-block;
-
-	&:not(.profile-tabs__tab--selected) {
-		cursor: pointer;
-	}
-}
-
-.profile-tabs__tab--selected {
-	background-color: $modal-color-1;
-	color: $text-color-light;
-}
-
-.profile-tab__contents {
-	display: none;
-}
-
-.profile-tab__contents--selected {
+.profile__contents {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 }
 
 .profile__profile-picture {
@@ -189,6 +167,12 @@
 
 .profile__footer {
 	margin-bottom: 2em;
+}
+
+.profile__footer-text {
+	color: $gray-chateau;
+	font-size: 0.85em;
+	text-align: center;
 }
 
 /* TODO: possibly put these in the media-boxes trumps file

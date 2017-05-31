@@ -1,6 +1,6 @@
 <script id="child-details-template" type="text/x-handlebars-template">
 
-	<div class="profile-tab__contents profile-tab__contents--selected" data-contents="profile">
+	<div class="profile-tab__contents">
 
 		<div class="profile__basic-info">
 			<div class="profile-details__name">\{{ name }}</div>
@@ -33,8 +33,12 @@
 
 		</div>
 
-		<!-- REDESIGN TODO: make "Information Request form" a button -->
-		<div class="profile__footer">You can help bring me closer to finding "a place to call HOME" by filling out the <a href="/forms/information-request-form">MARE Information Request Form</a>. They will be glad to help you get more information about me.</div>
+		<div class="profile__footer">
+			<div class="profile__footer-text">Bring me closer to finding a place to call home by filling out my: </div>
+			<span class="button-group button-group--centered button-group--small-margin-above">
+				<button class="button button--extra-large button--teal button--information-request" data-registration-number="\{{ registrationNumber }}">Information Request Form</button>
+			</span>
+		</div>
 		
 		<!-- REDESIGN TODO: redo bookmark design --> 
 		<!-- determining whether to add the block below based on whether the user is allowed to bookmark children needs to happen server-side -->
