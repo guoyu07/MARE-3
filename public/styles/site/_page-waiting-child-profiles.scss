@@ -49,6 +49,35 @@
 	vertical-align: middle;
 }
 
+/******** REDESIGN TODO: move the bookmark to its own file *********/
+
+.profile__bookmark {
+	cursor: pointer;
+	width: 26px;
+	height: 30px;
+	position: relative;
+	// REDESIGN TODO: make the non-active state just a teal outline aka "hollow". May need to be an SVG
+	background: $light-gray;
+
+	&:after {
+		content: "";
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 0;
+		height: 0;
+		border-bottom: 10px solid $white;
+		border-left: 13px solid transparent;
+		border-right: 13px solid transparent;
+	}
+
+	&--active {
+		background: $teal;
+	}
+}
+
+/******** REDESIGN TODO: move the bookmark to its own file *******/
+
 .child-details,
 .sibling-group-details {
 	align-items: center;
@@ -87,7 +116,7 @@
 	width: 100%;
 }
 
-.profile__profile-picture {
+.profile__picture {
     margin-bottom: 1em;
 	margin-right: 1em;
 	width: 200px;
@@ -97,15 +126,22 @@
 	}
 }
 
+.profile__picture-caption {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 2em;
+	margin-right: 1em;
+}
+
 .profile__basic-info {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 2em;
 }
 
 .profile__detailed-info {
 	display: flex;
+	margin-top: 1em;
 }
 
 .profile__bio {
@@ -184,14 +220,4 @@
 
 .media-boxes-load-more-button {
 	display: none;
-}
-
-.bookmark {
-	display: inline-block;
-	margin-top: 10px;
-	font-family: sans-serif;
-
-	&--active {
-		color: $text-color-7;
-	}
 }

@@ -1,6 +1,6 @@
 <script id="sibling-group-details-template" type="text/x-handlebars-template">
 
-	<div class="profile-tab__contents profile-tab__contents--selected" data-contents="profile">
+	<div class="profile__contents">
 
 		<div class="profile__basic-info">
 			<div class="profile-details__name">\{{ namesString }}</div>
@@ -11,8 +11,19 @@
 		<div class="profile__detailed-info">
 
 			<div class="profile__picture-area">
-				<img class="profile__profile-picture" src=\{{ detailImage }}>
-				<div class="profile-details__registration-number">Registration # \{{ registrationNumbersString }}</div>
+				<img class="profile__picture" src=\{{ detailImage }}>
+				<div class="profile__picture-caption">
+					<!-- REDESIGN TODO: add teal mare icon to the left of Registration number -->
+					<div class="profile-details__registration-number">Registration # \{{ registrationNumbersString }}</div>
+					<!-- determining whether to add the block below based on whether the user is allowed to bookmark children needs to happen server-side -->
+					{{#if canBookmarkChildren}}
+						\{{#if isBookmarked}}
+						<div class="sibling-group-bookmark profile__bookmark profile__bookmark--active" data-registration-numbers="\{{ registrationNumbers }}"></div>
+						\{{else}}
+						<div class="sibling-group-bookmark profile__bookmark" data-registration-numbers="\{{ registrationNumbers }}"></div>
+						\{{/if}}
+					{{/if}}
+				</div>
 			</div>
 
 			<div class="profile__bio">
@@ -37,21 +48,6 @@
 				<button class="button button--extra-large button--teal button--information-request" data-registration-number="\{{ registrationNumbers }}">Information Request Form</button>
 			</span>
 		</div>
-
-		<!-- REDESIGN TODO: redo bookmark design --> 
-		<!-- determining whether to add the block below based on whether the user is allowed to bookmark children needs to happen server-side -->
-		{{#if canBookmarkChildren}}
-		<div class="button-group button-group--horizontal button-group--space-around button-group--large-margin-above button-group--small-margin-below">
-			\{{#if isBookmarked}}
-			<button class="button button--teal button--large sibling-group-bookmark-button button--active" data-registration-numbers="\{{ registrationNumbers }}">Remove Bookmark</button>
-			\{{else}}
-			<button class="button button--teal button--large sibling-group-bookmark-button" data-registration-numbers="\{{ registrationNumbers }}">Bookmark</button>
-			\{{/if}}
-			<a href="/forms/information-request-form?registrationNumber=\{{ registrationNumbers }}">
-				<button class="button button--teal button--large sibling-group-inquiry-button">Inquire</button>
-			</a>
-		</div>
-		{{/if}}
 	</div>
 
 	\{{#if hasVideo}}

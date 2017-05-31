@@ -26,7 +26,7 @@
 			});
 			// when we get a response from the server that the bookmark for a child has successfully updated, update the view
 			mare.collections.galleryChildren.on( 'childBookmarkUpdated', function( registrationNumber, action ) {
-				view.updateBookmarkButton( registrationNumber, action );
+				view.updateBookmark( registrationNumber, action );
 			});
 		},
 		// events need to be bound every time the modal is opened, so they can't be put in an event block
@@ -34,14 +34,14 @@
   			$( '.modal__close' ).click( this.closeModal );
 			$( '.profile-navigation__previous' ).click( this.handleNavClick );
 			$( '.profile-navigation__next' ).click( this.handleNavClick );
-			$( '.child-bookmark-button' ).click( this.broadcastBookmarkUpdateEvent );
+			$( '.child-bookmark' ).click( this.broadcastBookmarkUpdateEvent );
 		},
 		// events need to be unbound every time the modal is closed
 		unbindEvents: function unbindEvents() {
 			$( '.modal__close' ).unbind( 'click' );
 			$( '.profile-navigation__previous' ).unbind( 'click' );
 			$( '.profile-navigation__next' ).unbind( 'click' );
-			$( '.child-bookmark-button' ).unbind( 'click' );
+			$( '.child-bookmark' ).unbind( 'click' );
 			$( '.profile-tabs__tab' ).unbind( 'click' );
 		},
 
@@ -198,45 +198,45 @@
 			var registrationNumber = $currentTarget.data( 'registration-number' );
 
 			// if we are currently saving the users attempt to toggle the bookmark and the server hasn't processed the change yet, ignore the click event
-			if( $currentTarget.hasClass( 'button--disabled' ) ) {
+			if( $currentTarget.hasClass( 'bookmark--disabled' ) ) {
 
 				return;
 
 			// if the child is currently bookmarked, remove them
-			} else if( $currentTarget.hasClass( 'button--active' ) ) {
+			} else if( $currentTarget.hasClass( 'bookmark--active' ) ) {
 
-				$currentTarget.addClass( 'button--disabled' );
+				$currentTarget.addClass( 'bookmark--disabled' );
 				// send an event that the bookmark needs to be updated
 				mare.collections.galleryChildren.trigger( 'childBookmarkUpdateNeeded', registrationNumber, 'remove' );
 
 			// if the child is not currently bookmarked, add them
 			} else {
 
-				$currentTarget.addClass( 'button--disabled' );
+				$currentTarget.addClass( 'bookmark--disabled' );
 				// send an event that the bookmark needs to be updated
 				mare.collections.galleryChildren.trigger( 'childBookmarkUpdateNeeded', registrationNumber, 'add' );
 
 			}
 		},
 
-		updateBookmarkButton: function updateBookmarkButton( registrationNumber, action ) {
+		updateBookmark: function updateBookmark( registrationNumber, action ) {
 
-			var targetButton = $('.child-bookmark-button[data-registration-number="' + registrationNumber + '"]')
+			var target = $('.child-bookmark[data-registration-number="' + registrationNumber + '"]')
 
 			switch( action ) {
 				case 'add':
 					// change the icon from a plus to a minus
-					targetButton.html( 'Remove Bookmark' );
-					targetButton.addClass( 'button--active' );
+					target.html( 'Remove Bookmark' );
+					target.addClass( 'bookmark--active' );
 					break;
 				case 'remove':
 					// change the icon from a minus to a plus
-					targetButton.html( 'Bookmark' );
-					targetButton.removeClass( 'button--active' );
+					target.html( 'Bookmark' );
+					target.removeClass( 'bookmark--active' );
 					break;
 			}
 
-			targetButton.removeClass( 'button--disabled' );
+			target.removeClass( 'bookmark--disabled' );
 		},
 		
 		openInfoRequestForm: function openInfoRequestForm(event) {

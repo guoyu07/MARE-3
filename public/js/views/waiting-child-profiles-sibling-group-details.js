@@ -26,7 +26,7 @@
 			});
 			// when we get a response from the server that the bookmark for a sibling group has successfully updated, update the view
 			mare.collections.galleryChildren.on( 'siblingGroupBookmarkUpdated', function( registrationNumbers, action ) {
-				view.updateBookmarkButton( registrationNumbers, action );
+				view.updateBookmark( registrationNumbers, action );
 			});
 		},
 		// events need to be bound every time the modal is opened, so they can't be put in an event block
@@ -34,14 +34,14 @@
   			$( '.modal__close' ).click( this.closeModal );
 			$( '.profile-navigation__previous' ).click( this.handleNavClick );
 			$( '.profile-navigation__next' ).click( this.handleNavClick );
-			$( '.sibling-group-bookmark-button' ).click(  this.broadcastBookmarkUpdateEvent );
+			$( '.sibling-group-bookmark' ).click(  this.broadcastBookmarkUpdateEvent );
 		},
 		// events need to be unbound every time the modal is closed
 		unbindEvents: function unbindEvents() {
 			$( '.modal__close' ).unbind( 'click' );
 			$( '.profile-navigation__previous' ).unbind( 'click' );
 			$( '.profile-navigation__next' ).unbind( 'click' );
-			$( '.sibling-group-bookmark-button' ).unbind( 'click' );
+			$( '.sibling-group-bookmark' ).unbind( 'click' );
 			$( '.profile-tabs__tab' ).unbind( 'click' );
 		},
 
@@ -200,45 +200,45 @@
 			var registrationNumbers = $currentTarget.data( 'registration-numbers' );
 
 			// if we are currently saving the users attempt to toggle the bookmark and the server hasn't processed the change yet, ignore the click event
-			if( $currentTarget.hasClass( 'button--disabled' ) ) {
+			if( $currentTarget.hasClass( 'bookmark--disabled' ) ) {
 
 				return;
 
 			// if the sibling group is currently bookmarked, remove them
-			} else if( $currentTarget.hasClass( 'button--active' ) ) {
+			} else if( $currentTarget.hasClass( 'bookmark--active' ) ) {
 
-				$currentTarget.addClass( 'button--disabled' );
+				$currentTarget.addClass( 'bookmark--disabled' );
 				// send an event that the bookmark needs to be updated
 				mare.collections.galleryChildren.trigger( 'siblingGroupBookmarkUpdateNeeded', registrationNumbers, 'remove' );
 
 			// if the sibling group is not currently bookmarked, add them
 			} else {
 
-				$currentTarget.addClass( 'button--disabled' );
+				$currentTarget.addClass( 'bookmark--disabled' );
 				// send an event that the bookmark needs to be updated
 				mare.collections.galleryChildren.trigger( 'siblingGroupBookmarkUpdateNeeded', registrationNumbers, 'add' );
 
 			}
 		},
 
-		updateBookmarkButton: function updateBookmarkButton( registrationNumbers, action ) {
+		updateBookmark: function updateBookmark( registrationNumbers, action ) {
 
-			var targetButton = $('.sibling-group-bookmark-button[data-registration-numbers="' + registrationNumbers + '"]')
+			var target = $('.sibling-group-bookmark[data-registration-numbers="' + registrationNumbers + '"]')
 
 			switch( action ) {
 				case 'add':
 					// change the icon from a plus to a minus
-					targetButton.html( 'Remove Bookmark' );
-					targetButton.addClass( 'button--active' );
+					target.html( 'Remove Bookmark' );
+					target.addClass( 'bookmark--active' );
 					break;
 				case 'remove':
 					// change the icon from a minus to a plus
-					targetButton.html( 'Bookmark' );
-					targetButton.removeClass( 'button--active' );
+					target.html( 'Bookmark' );
+					target.removeClass( 'bookmark--active' );
 					break;
 			}
 
-			targetButton.removeClass( 'button--disabled' );
+			target.removeClass( 'bookmark--disabled' );
 		},
 
 		openInfoRequestForm: function openInfoRequestForm(event) {
