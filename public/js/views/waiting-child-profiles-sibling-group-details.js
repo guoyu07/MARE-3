@@ -7,6 +7,10 @@
 		// Give the container for our view a class we can hook into
   		className: 'sibling-group-details',
 
+		events: {
+			'click .button--information-request' : 'openInfoRequestForm'
+		},
+
 		initialize: function initialize() {
 			// Store a reference to this for insde callbacks where context is lost
 			var view = this;
@@ -55,8 +59,6 @@
 			});
 			// Set a data attribute with the displayed child's id for use in next/prev navigation
 			this.$el.attr('data-registration-number', siblingGroupModel.get('registrationNumber'));
-			// Set up the modal tab click events
-			this.initializeModalTabs();
 			// Bind click events for the newly rendered elements
 			this.bindEvents();
 
@@ -190,32 +192,6 @@
 			$( '.modal__container' ).removeClass( 'modal__container--large' );
 		},
 
-		/* initialize tabbing within the modal window */
-		// TOOD: consider making this more generic and pulling it into a location that's accessible to all pages
-		initializeModalTabs: function initializeModalTabs() {
-			// DOM cache any commonly used elements to improve performance
-			var $profileTabs = $('.profile-tabs__tab')
-
-			$profileTabs.on('click', function() {
-				// DOM cache any commonly used elements to improve performance
-				var $selectedTab			= $('.profile-tabs__tab--selected'),
-					$selectedTabContents	= $('.profile-tab__contents--selected');
-
-				if($(this).hasClass('profile-tabs__tab--selected')) {
-					return;
-				}
-
-				var selectedContentType = $(this).data('tab');
-
-				$selectedTab.removeClass('profile-tabs__tab--selected');
-				$(this).addClass('profile-tabs__tab--selected');
-
-				$selectedTabContents.removeClass('profile-tab__contents--selected');
-				$('[data-contents=' + selectedContentType + ']').addClass('profile-tab__contents--selected');
-
-			});
-		},
-
 		/* toggle whether the child is bookmarked */
 		broadcastBookmarkUpdateEvent: function broadcastBookmarkUpdateEvent( event ) {
 			// DOM cache the current target for performance
@@ -263,6 +239,12 @@
 			}
 
 			targetButton.removeClass( 'button--disabled' );
+		},
+
+		openInfoRequestForm: function openInfoRequestForm(event) {
+			var selectedChild = $( event.currentTarget ),
+				registrationNumber = selectedChild.data( 'registration-number' );
+			window.location.href = '/forms/information-request-form?registrationNumber=' + registrationNumber;
 		}
 
 	});
