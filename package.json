@@ -32,7 +32,7 @@
     "moment": "~2.19.1",
     "mongoose-simple-random": "^0.4.1",
     "newrelic": "^2.3.1",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.6.1",
     "node-sass-middleware": "^0.11.0",
     "stripe": "^5.2.0",
     "underscore": "~1.8.3"
