@@ -49,7 +49,37 @@
 	vertical-align: middle;
 }
 
-.child-details {
+/******** REDESIGN TODO: move the bookmark to its own file *********/
+
+.profile__bookmark {
+	cursor: pointer;
+	width: 26px;
+	height: 30px;
+	position: relative;
+	// REDESIGN TODO: make the non-active state just a teal outline aka "hollow". May need to be an SVG
+	background: $light-gray;
+
+	&:after {
+		content: "";
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 0;
+		height: 0;
+		border-bottom: 10px solid $white;
+		border-left: 13px solid transparent;
+		border-right: 13px solid transparent;
+	}
+
+	&--active {
+		background: $teal;
+	}
+}
+
+/******** REDESIGN TODO: move the bookmark to its own file *******/
+
+.child-details,
+.sibling-group-details {
 	align-items: center;
     display: flex;
     flex-direction: column;
@@ -80,35 +110,13 @@
 	font-size: 1.2em;
 }
 
-.profile-tabs {
-	border-bottom: 1px solid $modal-color-1;
-	margin-bottom: 1em;
-}
-
-.profile-tabs__tab {
-	padding: 1em;
-	display: inline-block;
-
-	&:not(.profile-tabs__tab--selected) {
-		cursor: pointer;
-	}
-}
-
-.profile-tabs__tab--selected {
-	background-color: $modal-color-1;
-	color: $text-color-light;
-}
-
-.profile-tab__contents {
-	display: none;
-}
-
-.profile-tab__contents--selected {
+.profile__contents {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 }
 
-.profile__profile-picture {
+.profile__picture {
     margin-bottom: 1em;
 	margin-right: 1em;
 	width: 200px;
@@ -118,15 +126,22 @@
 	}
 }
 
+.profile__picture-caption {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 2em;
+	margin-right: 1em;
+}
+
 .profile__basic-info {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 2em;
 }
 
 .profile__detailed-info {
 	display: flex;
+	margin-top: 1em;
 }
 
 .profile__bio {
@@ -190,6 +205,12 @@
 	margin-bottom: 2em;
 }
 
+.profile__footer-text {
+	color: $gray-chateau;
+	font-size: 0.85em;
+	text-align: center;
+}
+
 /* TODO: possibly put these in the media-boxes trumps file
 /* hover effect on the image */
 
@@ -199,14 +220,4 @@
 
 .media-boxes-load-more-button {
 	display: none;
-}
-
-.bookmark {
-	display: inline-block;
-	margin-top: 10px;
-	font-family: sans-serif;
-
-	&--active {
-		color: $text-color-7;
-	}
 }

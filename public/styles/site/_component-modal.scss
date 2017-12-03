@@ -52,9 +52,9 @@
 		margin-top: 0;
 
 		@media all and (min-width: 825px) {
-			width: 80vw;
+			width: 60vw;
 			height: 80vh;
-			left: 10vw;
+			left: 20vw;
 			top: 10vh;
 		}
 	}
@@ -81,6 +81,12 @@
 	left: calc( 50% - 50px );
 	width: 100px;
 	height: 100px;
+	display: flex;
+	justify-content: center;
+
+	&--relative {
+		position: relative;
+	}
 }
 
 .modal-container__contents {

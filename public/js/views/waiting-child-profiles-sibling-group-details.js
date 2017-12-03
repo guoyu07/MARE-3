@@ -7,6 +7,10 @@
 		// give the container for our view a class we can hook into
   		className: 'sibling-group-details',
 
+		events: {
+			'click .button--information-request' : 'openInfoRequestForm'
+		},
+
 		initialize: function initialize() {
 			// store a reference to this for insde callbacks where context is lost
 			var view = this;
@@ -22,7 +26,7 @@
 			});
 			// when we get a response from the server that the bookmark for a sibling group has successfully updated, update the view
 			mare.collections.galleryChildren.on( 'siblingGroupBookmarkUpdated', function( registrationNumbers, action ) {
-				view.updateBookmarkButton( registrationNumbers, action );
+				view.updateBookmark( registrationNumbers, action );
 			});
 		},
 		// events need to be bound every time the modal is opened, so they can't be put in an event block
@@ -37,7 +41,7 @@
 			$( '.modal__close' ).unbind( 'click' );
 			$( '.profile-navigation__previous' ).unbind( 'click' );
 			$( '.profile-navigation__next' ).unbind( 'click' );
-			$( '.sibling-group-bookmark-button' ).unbind( 'click' );
+			$( '.sibling-group-bookmark' ).unbind( 'click' );
 			$( '.profile-tabs__tab' ).unbind( 'click' );
 		},
 
@@ -192,32 +196,6 @@
 			$( '.modal__container' ).removeClass( 'modal__container--large' );
 		},
 
-		/* initialize tabbing within the modal window */
-		// TOOD: consider making this more generic and pulling it into a location that's accessible to all pages
-		initializeModalTabs: function initializeModalTabs() {
-			// DOM cache any commonly used elements to improve performance
-			var $profileTabs = $('.profile-tabs__tab')
-
-			$profileTabs.on('click', function() {
-				// DOM cache any commonly used elements to improve performance
-				var $selectedTab			= $('.profile-tabs__tab--selected'),
-					$selectedTabContents	= $('.profile-tab__contents--selected');
-
-				if($(this).hasClass('profile-tabs__tab--selected')) {
-					return;
-				}
-
-				var selectedContentType = $(this).data('tab');
-
-				$selectedTab.removeClass('profile-tabs__tab--selected');
-				$(this).addClass('profile-tabs__tab--selected');
-
-				$selectedTabContents.removeClass('profile-tab__contents--selected');
-				$('[data-contents=' + selectedContentType + ']').addClass('profile-tab__contents--selected');
-
-			});
-		},
-
 		/* toggle whether the child is bookmarked */
 		broadcastBookmarkUpdateEvent: function broadcastBookmarkUpdateEvent( event ) {
 			// DOM cache the current target for performance
@@ -226,45 +204,51 @@
 			var registrationNumbers = $currentTarget.data( 'registration-numbers' );
 
 			// if we are currently saving the users attempt to toggle the bookmark and the server hasn't processed the change yet, ignore the click event
-			if( $currentTarget.hasClass( 'button--disabled' ) ) {
+			if( $currentTarget.hasClass( 'bookmark--disabled' ) ) {
 
 				return;
 
 			// if the sibling group is currently bookmarked, remove them
-			} else if( $currentTarget.hasClass( 'button--active' ) ) {
+			} else if( $currentTarget.hasClass( 'bookmark--active' ) ) {
 
-				$currentTarget.addClass( 'button--disabled' );
+				$currentTarget.addClass( 'bookmark--disabled' );
 				// send an event that the bookmark needs to be updated
 				mare.collections.galleryChildren.trigger( 'siblingGroupBookmarkUpdateNeeded', registrationNumbers, 'remove' );
 
 			// if the sibling group is not currently bookmarked, add them
 			} else {
 
-				$currentTarget.addClass( 'button--disabled' );
+				$currentTarget.addClass( 'bookmark--disabled' );
 				// send an event that the bookmark needs to be updated
 				mare.collections.galleryChildren.trigger( 'siblingGroupBookmarkUpdateNeeded', registrationNumbers, 'add' );
 
 			}
 		},
 
-		updateBookmarkButton: function updateBookmarkButton( registrationNumbers, action ) {
+		updateBookmark: function updateBookmark( registrationNumbers, action ) {
 
-			var targetButton = $('.sibling-group-bookmark-button[data-registration-numbers="' + registrationNumbers + '"]')
+			var target = $('.sibling-group-bookmark[data-registration-numbers="' + registrationNumbers + '"]')
 
 			switch( action ) {
 				case 'add':
 					// change the icon from a plus to a minus
-					targetButton.html( 'Remove Bookmark' );
-					targetButton.addClass( 'button--active' );
+					target.html( 'Remove Bookmark' );
+					target.addClass( 'bookmark--active' );
 					break;
 				case 'remove':
 					// change the icon from a minus to a plus
-					targetButton.html( 'Bookmark' );
-					targetButton.removeClass( 'button--active' );
+					target.html( 'Bookmark' );
+					target.removeClass( 'bookmark--active' );
 					break;
 			}
 
-			targetButton.removeClass( 'button--disabled' );
+			target.removeClass( 'bookmark--disabled' );
+		},
+
+		openInfoRequestForm: function openInfoRequestForm(event) {
+			var selectedChild = $( event.currentTarget ),
+				registrationNumber = selectedChild.data( 'registration-number' );
+			window.location.href = '/forms/information-request-form?registrationNumber=' + registrationNumber;
 		}
 	});
 }());
