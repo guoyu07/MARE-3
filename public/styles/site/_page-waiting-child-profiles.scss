@@ -90,7 +90,7 @@
 /* TODO: We've BEM'ed below, now BEM above! */
 .profile__profile-navigation {
 	margin-bottom: 1em;
-	color: $link-color;
+	color: $link-color-1; // TODO: changed by Anna and not reviewed well enough, check color name assignments
 }
 
 .profile-navigation__previous-text,

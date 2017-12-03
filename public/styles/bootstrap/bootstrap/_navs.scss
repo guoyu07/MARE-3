@@ -47,7 +47,7 @@
     &:hover,
     &:focus {
       background-color: $nav-link-hover-bg;
-      border-color: $link-color;
+      border-color: $link-color-1; // TODO: changed by Anna and not reviewed well enough, check color name assignments
     }
   }
 
